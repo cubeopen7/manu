@@ -1,6 +1,7 @@
 # My
 /.idea
 /data
+.bat
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
