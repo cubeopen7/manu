@@ -13,7 +13,10 @@ def list_remove(_list, value):
     new_list = copy.deepcopy(_list)
     if isinstance(value, Iterable):
         for t in value:
-            new_list.remove(t)
+            try:
+                new_list.remove(t)
+            except ValueError:
+                continue
     else:
         new_list.remove(value)
     return new_list
