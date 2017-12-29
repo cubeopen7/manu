@@ -145,6 +145,21 @@ if __name__ == "__main__":
     test = pd.read_csv(data_dir + "test.csv")
     X_train = train.iloc[:, 1:-1]
     X_test = test.iloc[:, 1:]
+    y_train = train.iloc[:, -1]
 
     from sklearn.linear_model import LassoCV
     seed = 777
+
+    lasso = LassoCV(n_alphas=100)
+    lasso.fit(X_train, y_train)
+    print(lasso.coef_)
+    print(lasso.alpha_)
+    pred = lasso.predict(X_test)
+
+    id_test = test[id_cols]
+    res = pd.concat([id_test, pd.DataFrame(pred.reshape(-1, 1))], axis=1, ignore_index=True)
+    res_A = res.iloc[:100].copy()
+    res_B = res.iloc[100:].copy()
+    res_A.to_csv(data_dir + "resA.csv", index=False, header=False)
+    res_B.to_csv(data_dir + "resB.csv", index=False, header=False)
+    res.to_csv(data_dir + "resTotal.csv", index=False, header=False)
